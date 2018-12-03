@@ -5,6 +5,7 @@ dest_port = 12345
 for i in range(11):
     msg = "A"
     s.sendto(msg, (dest_ip,dest_port))
+    s.sendto(msg, (dest_ip,dest_port))
 data, sender_info = s.recvfrom(2048)
 print "Server sent: ", data
 s.close()

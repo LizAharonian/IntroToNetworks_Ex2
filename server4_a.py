@@ -11,7 +11,7 @@ def main(argv):
         data, sender_info = s.recvfrom(15000)
         print("Received: " + data)
         concat_client_messages += data
-        if(len(concat_client_messages == 15000)):
+        if(len(concat_client_messages) == 15000):
             s.sendto("B", sender_info)
 
 
