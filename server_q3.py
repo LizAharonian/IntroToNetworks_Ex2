@@ -4,7 +4,9 @@ import os.path
 # response messages
 FILE_FOUND_MSG = "HTTP/1.1 200 OK"
 FILE_NOT_FOUND_MSG = "HTTP/1.1 404 Not Found"
+REDIRECT_MSG = "HTTP/1.1 301 Moved Permanently"
 CLOSE_MSG = "Connection: close"
+REDIRECT_CONTENT = "REDIRECT"
 
 # connection settings
 IP = '0.0.0.0'
@@ -42,6 +44,8 @@ def get_file_content(file_name):
     # "/" means index.html files in the root folder
     if file_name == "/":
         file_to_read = "files/index.html"
+    elif file_name == "/redirect":
+        return REDIRECT_CONTENT
     else:
         file_to_read = "files/" + file_name
     # file doesn't exists
@@ -56,12 +60,14 @@ def get_file_content(file_name):
     return content
 
 def create_response(file_content):
+    response = ""
     if file_content == None:
-        response = FILE_NOT_FOUND_MSG
-        return "{}\r\n {}".format(response, CLOSE_MSG)
+        response = "{}\r\n {}".format(FILE_NOT_FOUND_MSG, CLOSE_MSG)
+    elif file_content == REDIRECT_CONTENT:
+        response = "{}\r\n{}Location: /result.html\r\n\r\n".format(REDIRECT_MSG, CLOSE_MSG)
     else:
-        response = FILE_FOUND_MSG
-    return "{}\r\n {}\r\n\r\n{}".format(response, CLOSE_MSG, file_content)
+        response =  "{}\r\n {}\r\n\r\n{}".format(FILE_FOUND_MSG, CLOSE_MSG, file_content)
+    return response
 
 
 if __name__ == "__main__":
