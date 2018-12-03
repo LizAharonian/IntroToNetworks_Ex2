@@ -15,11 +15,9 @@ s.connect((dest_ip, dest_port))
 print "client sent message to server"
 send_messages()
 sleep(0.2)
-counter = 0
 for i in range(10):
     send_messages()
 
-print counter
 data = s.recv(4096)
 print "Server sent: ", data
 s.close()
