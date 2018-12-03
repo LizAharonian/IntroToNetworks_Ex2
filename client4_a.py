@@ -1,11 +1,9 @@
-import socket
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-dest_ip = '10.0.2.2'
+from socket import socket, AF_INET, SOCK_DGRAM
+s = socket(AF_INET, SOCK_DGRAM)
+dest_ip = '127.0.0.1'
 dest_port = 12345
-s.connect((dest_ip, dest_port))
 msg = "A" * 15000
-s.send(msg)
-data = s.recv(4096)
+s.sendto(msg, (dest_ip,dest_port))
+data, sender_info = s.recvfrom(2048)
 print "Server sent: ", data
 s.close()
