@@ -27,11 +27,12 @@ def main():
         print 'Received: ', data
         data = data.split("\r\n")
         # data[0] is the GET line
-        file_name = get_file_name_from_message(data[0])
-        file_content = get_file_content(file_name)
-        # create response for the client request
-        response = create_response(file_content)
-        client_socket.send(response)
+        if "GET" in data[0]:
+            file_name = get_file_name_from_message(data[0])
+            file_content = get_file_content(file_name)
+            # create response for the client request
+            response = create_response(file_content)
+            client_socket.send(response)
         print 'Client disconnected'
         client_socket.close()
 
