@@ -11,12 +11,14 @@ while True:
     concat_client_messages = ""
     data = client_socket.recv(1024)
     concat_client_messages += data
+    sent_flag = False
     while not data == '':
         print 'Received: ', data
         data = client_socket.recv(1024)
         concat_client_messages += data
-        if len(concat_client_messages) == 22:
+        if len(concat_client_messages) == 22 and not sent_flag:
             client_socket.send('B')
+            sent_flag = True
 
     print 'Client disconnected'
     client_socket.close()
