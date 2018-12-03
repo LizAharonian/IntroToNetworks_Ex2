@@ -1,6 +1,7 @@
 from socket import socket, AF_INET, SOCK_DGRAM
 s = socket(AF_INET, SOCK_DGRAM)
 dest_ip = '127.0.0.1'
+
 dest_port = 12345
 for i in range(11):
     msg = "A"
