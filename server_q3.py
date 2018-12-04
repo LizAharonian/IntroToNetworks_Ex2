@@ -65,7 +65,7 @@ def create_response(file_content):
     if file_content == None:
         response = "{}\r\n{}".format(FILE_NOT_FOUND_MSG, CLOSE_MSG)
     elif file_content == REDIRECT_CONTENT:
-        response = "{}\r\n{}Location: /result.html\r\n\r\n".format(REDIRECT_MSG, CLOSE_MSG)
+        response = "{}\r\n{}\r\nLocation: /result.html\r\n\r\n".format(REDIRECT_MSG, CLOSE_MSG)
     else:
         response =  "{}\r\n{}\r\n\r\n{}".format(FILE_FOUND_MSG, CLOSE_MSG, file_content)
     return response
