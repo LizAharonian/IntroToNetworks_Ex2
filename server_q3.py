@@ -26,7 +26,7 @@ def main():
         #while not data == '':
         print 'Received: ', data
         data = data.split("\r\n")
-        # data[0] is the GET line
+        # data[0] supposed to be the GET line
         if "GET" in data[0]:
             file_name = get_file_name_from_message(data[0])
             file_content = get_file_content(file_name)
@@ -63,11 +63,11 @@ def get_file_content(file_name):
 def create_response(file_content):
     response = ""
     if file_content == None:
-        response = "{}\r\n {}".format(FILE_NOT_FOUND_MSG, CLOSE_MSG)
+        response = "{}\r\n{}".format(FILE_NOT_FOUND_MSG, CLOSE_MSG)
     elif file_content == REDIRECT_CONTENT:
         response = "{}\r\n{}Location: /result.html\r\n\r\n".format(REDIRECT_MSG, CLOSE_MSG)
     else:
-        response =  "{}\r\n {}\r\n\r\n{}".format(FILE_FOUND_MSG, CLOSE_MSG, file_content)
+        response =  "{}\r\n{}\r\n\r\n{}".format(FILE_FOUND_MSG, CLOSE_MSG, file_content)
     return response
 
 
