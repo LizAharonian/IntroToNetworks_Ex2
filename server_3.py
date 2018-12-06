@@ -1,3 +1,6 @@
+"""
+TCP server of question 3
+"""
 import socket
 import os.path
 
@@ -14,6 +17,9 @@ PORT = 12345
 MAX_CLIENTS = 5
 
 def main():
+    """
+    Runs the server.
+    """
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_ip = IP
     server_port = PORT
@@ -37,10 +43,21 @@ def main():
         client_socket.close()
 
 def get_file_name_from_message(msg):
+    """
+    extract the file name from the GET request.
+    :param msg: GET request line: GET <file> HTTP1.1
+    :return: file name
+    """
     file_name = msg.split(" ")[1]
     return file_name
 
 def get_file_content(file_name):
+    """
+    gets a file name and return the file content. path of the file is relative
+    to the "files" folder.
+    :param file_name: file name
+    :return: file content
+    """
     file_to_read = file_name
     # "/" means index.html files in the root folder
     if file_name == "/":
@@ -52,6 +69,7 @@ def get_file_content(file_name):
     # file doesn't exists
     if not os.path.isfile(file_to_read):
         return None
+    # .jpg files are read in binary mode
     if file_to_read.endswith(".jpg"):
         file = open(file_to_read, "rb")
     else:
@@ -61,6 +79,14 @@ def get_file_content(file_name):
     return content
 
 def create_response(file_content):
+    """
+    returns response string according to the file content.
+    :param file_content: file content
+        None = No File Found response
+        REDIRECT = redirect response
+        else, OK response
+    :return: response string
+    """
     response = ""
     if file_content == None:
         response = "{}\r\n{}".format(FILE_NOT_FOUND_MSG, CLOSE_MSG)
